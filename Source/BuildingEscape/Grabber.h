@@ -25,4 +25,11 @@ private:
     float Reach = 100.0f;
     AActor* LastHitActor;
     UPhysicsHandleComponent* PhysicsHandle = nullptr;
+	UInputComponent* InputComponent = nullptr;
+
+	void Grab();
+	void Release();
+
+	void FindPhysicsHandleComponent();
+	void FindInputComponent();
 };
