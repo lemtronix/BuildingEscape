@@ -22,8 +22,8 @@ public:
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
 private:
-    float Reach = 100.0f;
-    AActor* LastHitActor;
+    const float Reach = 100.0f;
+
     UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* InputComponent = nullptr;
 
@@ -32,4 +32,7 @@ private:
 
 	void FindPhysicsHandleComponent();
 	void FindInputComponent();
+
+	// Return hit for first physics body in reach
+	const FHitResult GetFirstPhysicsBodyInReach() const;
 };
