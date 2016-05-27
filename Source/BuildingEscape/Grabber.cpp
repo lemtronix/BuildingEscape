@@ -46,8 +46,6 @@ void UGrabber::TickComponent( float DeltaTime, ELevelTick TickType, FActorCompon
 
 void UGrabber::Grab()
 {
-	UE_LOG(LogTemp, Log, TEXT("Grab Pressed!"));
-
 	/// Line Trace and reach any actors with physics body collision channel set
 	FHitResult HitResult = GetFirstPhysicsBodyInReach();
 	UPrimitiveComponent* ComponentToGrab = HitResult.GetComponent();
@@ -58,15 +56,10 @@ void UGrabber::Grab()
 	{
 		PhysicsHandle->GrabComponent(ComponentToGrab, NAME_None, ComponentToGrab->GetOwner()->GetActorLocation(), true);
 	}
-
-	/// TODO attach physics
 }
 
 void UGrabber::Release()
 {
-	UE_LOG(LogTemp, Log, TEXT("Release Pressed!"));
-
-	/// TODO release physics handle
 	PhysicsHandle->ReleaseComponent();
 }
 
@@ -75,11 +68,7 @@ void UGrabber::FindPhysicsHandleComponent()
 {
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 
-	if (PhysicsHandle)
-	{
-		// Found handle
-	}
-	else
+	if (PhysicsHandle == nullptr)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s: PhysicsHandle Not Found!"), *GetOwner()->GetName());
 	}
@@ -92,7 +81,6 @@ void UGrabber::FindInputComponent()
 	if (InputComponent)
 	{
 		// Input Component Found
-		UE_LOG(LogTemp, Log, TEXT("Input component found!"));
 		InputComponent->BindAction("Grab", IE_Pressed, this, &UGrabber::Grab);
 		InputComponent->BindAction("Grab", IE_Released, this, &UGrabber::Release);
 	}
@@ -103,7 +91,7 @@ void UGrabber::FindInputComponent()
 	}
 }
 
-const FHitResult UGrabber::GetFirstPhysicsBodyInReach() const
+const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
 	FVector PlayerViewPointVector;
 	FRotator PlayerViewPointRotator;
@@ -132,3 +120,4 @@ const FHitResult UGrabber::GetFirstPhysicsBodyInReach() const
 
 	return HitResult;
 }
+
